@@ -1,3 +1,4 @@
+include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/pkg-info.mk
 
 PKG_VER != dpkg-parsechangelog -l ${PWD}/debian/changelog -SVersion | sed -e 's/-.*//'
@@ -5,8 +6,10 @@ MACRO_PKG_VER != dpkg-parsechangelog -l ${PWD}/pwt-macros/debian/changelog -SVer
 
 BUILDDIR?=build
 
-PWT_DEB=librust-pwt-dev_$(PKG_VER)_amd64.deb
-PWT_MACROS_DEB=librust-pwt-macros-dev_$(MACRO_PKG_VER)_amd64.deb
+ARCH := $(DEB_BUILD_ARCH)
+
+PWT_DEB=librust-pwt-dev_$(PKG_VER)_$(ARCH).deb
+PWT_MACROS_DEB=librust-pwt-macros-dev_$(MACRO_PKG_VER)_$(ARCH).deb
 
 DEBS=$(PWT_DEB) $(PWT_MACROS_DEB)
 BUILD_DEBS=$(addprefix $(BUILDDIR)/,$(DEBS))
